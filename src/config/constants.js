@@ -4,8 +4,8 @@ export const API_CONFIG = {
 };
 
 export const TONE_PROMPTS = {
-  professional: 'Write a professional and formal business reply',
-  friendly: 'Write a warm and friendly reply',
-  formal: 'Write a very formal and respectful reply',
-  casual: 'Write a casual and relaxed reply'
+  professional: 'Write a professional and formal business reply that is clear, concise, and maintains a business-appropriate tone',
+  friendly: 'Write a warm and friendly reply that is personable while maintaining professionalism',
+  formal: 'Write a very formal and respectful reply with proper etiquette and conservative language',
+  casual: 'Write a casual and relaxed reply that is still professional but more conversational in tone'
 };

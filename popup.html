@@ -3,77 +3,88 @@
 <head>
   <meta charset="UTF-8">
   <title>AI Email Reply Generator</title>
-  <style>
-    body {
-      width: 300px;
-      padding: 16px;
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-    }
-    
-    .container {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-    }
-    
-    button {
-      background-color: #1a73e8;
-      color: white;
-      border: none;
-      padding: 8px 16px;
-      border-radius: 4px;
-      cursor: pointer;
-      font-size: 14px;
-      transition: background-color 0.2s;
-    }
-    
-    button:hover {
-      background-color: #1557b0;
-    }
-    
-    .settings {
-      margin-top: 16px;
-      padding-top: 16px;
-      border-top: 1px solid #eee;
-    }
-    
-    input, select {
-      width: 100%;
-      padding: 8px;
-      border-radius: 4px;
-      border: 1px solid #ccc;
-      margin-bottom: 8px;
-    }
-    
-    .status {
-      font-size: 14px;
-      color: #666;
-    }
-  </style>
+  <link href="styles.css" rel="stylesheet">
 </head>
 <body>
-  <div class="container">
-    <h2>AI Email Reply Generator</h2>
-    
-    <div>
-      <label for="tone">Reply Tone:</label>
-      <select id="tone">
-        <option value="professional">Professional</option>
-        <option value="friendly">Friendly</option>
-        <option value="formal">Formal</option>
-        <option value="casual">Casual</option>
-      </select>
-    </div>
-    
-    <button id="generateReply">Generate Reply</button>
-    <div id="status" class="status"></div>
-    
-    <div class="settings">
-      <h3>Settings</h3>
-      <label for="apiKey">OpenAI API Key:</label>
-      <input type="password" id="apiKey" placeholder="Enter your OpenAI API key">
-      <button id="saveSettings">Save Settings</button>
-      <div id="settingsStatus" class="status"></div>
+  <div class="app-container">
+    <header class="app-header">
+      <img src="icons/icon48.png" alt="Logo" class="app-logo">
+      <h1>AI Email Reply</h1>
+    </header>
+
+    <main class="main-content">
+      <div class="email-status">
+        <div class="status-indicator" id="gmailStatus">
+          <span class="status-dot"></span>
+          <span class="status-text">Connecting to Gmail...</span>
+        </div>
+      </div>
+
+      <div class="compose-section">
+        <div class="tone-selector">
+          <label for="tone">Reply Tone:</label>
+          <select id="tone" class="select-styled">
+            <option value="professional">💼 Professional</option>
+            <option value="friendly">😊 Friendly</option>
+            <option value="formal">👔 Formal</option>
+            <option value="casual">👋 Casual</option>
+          </select>
+        </div>
+
+        <div class="context-input">
+          <label for="context">Additional Context:</label>
+          <textarea 
+            id="context" 
+            placeholder="Add custom notes or context for the AI..."
+            class="textarea-styled"
+          ></textarea>
+        </div>
+
+        <div class="actions">
+          <button id="generateReply" class="button primary">
+            <span class="button-icon">✨</span>
+            Generate Reply
+          </button>
+          <button id="sendReply" class="button secondary" disabled>
+            <span class="button-icon">📤</span>
+            Send Reply
+          </button>
+        </div>
+
+        <div id="status" class="status-message"></div>
+      </div>
+    </main>
+
+    <div class="settings-panel">
+      <div class="settings-header">
+        <h3>⚙️ Settings</h3>
+        <button id="toggleSettings" class="button-icon">▼</button>
+      </div>
+      
+      <div class="settings-content" id="settingsContent">
+        <div class="api-key-section">
+          <label for="apiKey">OpenAI API Key:</label>
+          <div class="api-key-input">
+            <input 
+              type="password" 
+              id="apiKey" 
+              class="input-styled"
+              placeholder="Enter your OpenAI API key"
+            >
+            <button id="toggleApiKey" class="button-icon">👁️</button>
+          </div>
+        </div>
+        
+        <div class="gmail-auth-section">
+          <button id="connectGmail" class="button secondary">
+            <span class="button-icon">🔄</span>
+            Reconnect to Gmail
+          </button>
+        </div>
+
+        <button id="saveSettings" class="button primary">Save Settings</button>
+        <div id="settingsStatus" class="status-message"></div>
+      </div>
     </div>
   </div>
   <script type="module" src="popup.js"></script>
