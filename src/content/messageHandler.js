@@ -6,23 +6,45 @@ export class MessageHandler {
   }
 
   async handleMessage(request) {
-    if (request.action !== 'generateReply') {
-      return;
-    }
-
     try {
-      await this.emailProcessor.processEmail(request.tone);
-      this.sendResponse('success', 'Reply generated successfully!');
+      switch (request.action) {
+        case 'generateReply':
+          await this.handleGenerateReply(request);
+          break;
+          
+        case 'checkConnection':
+          await this.handleConnectionCheck();
+          break;
+          
+        case 'getEmailContent':
+          await this.handleGetEmailContent();
+          break;
+      }
     } catch (error) {
-      console.error('Error:', error);
+      console.error('Message handler error:', error);
       this.sendResponse('error', error.message);
     }
   }
 
-  sendResponse(type, message) {
+  async handleGenerateReply(request) {
+    await this.emailProcessor.processEmail(request.tone, request.context);
+    this.sendResponse('success', 'Reply generated successfully!');
+  }
+
+  async handleConnectionCheck() {
+    const isConnected = await this.emailProcessor.checkConnection();
+    this.sendResponse('connectionStatus', { connected: isConnected });
+  }
+
+  async handleGetEmailContent() {
+    const content = await this.emailProcessor.getEmailContent();
+    this.sendResponse('emailContent', { content });
+  }
+
+  sendResponse(type, data) {
     chrome.runtime.sendMessage({
       action: type,
-      message: message
+      data: data
     });
   }
 }

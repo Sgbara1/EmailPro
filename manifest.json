@@ -5,7 +5,12 @@
   "description": "Automatically generate email replies using AI",
   "permissions": [
     "activeTab",
-    "storage"
+    "storage",
+    "scripting",
+    "tabs"
+  ],
+  "host_permissions": [
+    "https://mail.google.com/*"
   ],
   "action": {
     "default_popup": "popup.html",
@@ -18,9 +23,14 @@
   "content_scripts": [
     {
       "matches": ["*://mail.google.com/*"],
-      "js": ["content.js"]
+      "js": ["content.js"],
+      "run_at": "document_end"
     }
   ],
+  "web_accessible_resources": [{
+    "resources": ["src/*"],
+    "matches": ["*://mail.google.com/*"]
+  }],
   "icons": {
     "16": "icons/icon16.png",
     "48": "icons/icon48.png",
